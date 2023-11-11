@@ -1,0 +1,31 @@
+body{
+    background-color: #272C2E;
+    overflow: hidden;
+}
+
+.loginImg{
+    margin: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+}
+
+.loginButton{
+    margin: auto;
+    position: fixed;
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: #40484D;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -180%);
+    /* -ms-transform: translate(-50%, -50%); */
+}

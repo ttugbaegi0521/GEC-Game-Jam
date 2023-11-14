@@ -1,59 +1,109 @@
+// import React, { useEffect } from "react";
+// import "./Login.css";
+// import loginImg from "./hehe.png";
+// import { signInWithPopup, signOut } from "firebase/auth"; //추가
+// import { auth, provider } from "../Firebase/Firebase";
+
+// //props로 받아온다
+// const Login = ({setUser, user}) => {
+//   // const [userData, setUserData] = useState(null);
+//     const handleGoogleLogin = () => {
+//       signInWithPopup(auth, provider) // popup을 이용한 signup
+//         .then(async (result) => {
+//           setUser(result.user); // user data 설정
+
+//         })
+//         .catch((err) => {
+//           console.log(err);
+//         });
+//     }
+
+//     const handleLogout = () => {
+//       signOut(auth).then(()=>{
+//           window.location.reload();
+//       }).catch((error)=>{
+//           console.log("error", error)
+  
+//       })
+//     };
+
+//     useEffect(() => {
+//       const unSubscribe = auth.onAuthStateChanged((user) => {
+//         if (user) {
+//           console.log("the User is Logged in");
+//           setUser(user);
+//         }
+//         else{
+//           console.log("user is logged out");
+//         }
+//       });
+  
+//       return () => {
+//         unSubscribe();
+//       };
+//     });
+
+//     return (
+//         <div className="login">
+//             <img className="loginImg" src={loginImg} alt="hehe" width={"30%"}/>
+//             {user 
+//               ? <button className="loginButton" onClick={handleLogout}>LogOut</button>
+//               : <button className="loginButton" onClick={handleGoogleLogin}>Login with Google</button>
+//             }
+//         </div>
+//     );
+// }
+
+// export default Login;
 import React, { useEffect, useState } from "react";
-import Menubar from "../Menubar/Menubar";
 import "./Login.css";
 import loginImg from "./hehe.png";
 import { signInWithPopup, signOut } from "firebase/auth"; //추가
 import { auth, provider } from "../Firebase/Firebase";
+import { Navigate } from "react-router-dom";
+import Menubar from "../Menubar/Menubar";
 
-//props로 받아온다
 const Login = () => {
-  const [userData, setUserData] = useState(null);
-    const handleGoogleLogin = () => {
-      signInWithPopup(auth, provider) // popup을 이용한 signup
-        .then(async (result) => {
-          setUserData(result.user); // user data 설정
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
-    const handleLogout = () => {
-      signOut(auth).then(()=>{
-          window.location.reload();
-      }).catch((error)=>{
-          console.log("error", error)
-  
+  const handleGoogleLogin = () => {
+    signInWithPopup(auth, provider)
+      .then(async (result) => {
+        console.log(result.user);
+        Navigate("/");
       })
-    };
-
-    useEffect(() => {
-      const unSubscribe = auth.onAuthStateChanged((user) => {
-        if (user) {
-          console.log("the User is Logged in");
-          setUserData(user);
-        }
-        else{
-          console.log("user is logged out");
-        }
+      .catch((err) => {
+        console.log(err);
       });
-  
-      return () => {
-        unSubscribe();
-      };
-    });
+  };
 
-    return (
-        <div className="login">
-            <Menubar userData={userData}/>
-            <img className="loginImg" src={loginImg} alt="hehe" width={"30%"}/>
-            {userData 
-              ? <button className="loginButton" onClick={handleLogout}>LogOut</button>
-              : <button className="loginButton" onClick={handleGoogleLogin}>Login with Google</button>
-            }
-        </div>
-    );
+  useEffect(() => {
+    const unSubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setIsLoggedIn(true)
+      }
+    });
+  });
+
+  const handleLogout = () => {
+    signOut(auth).then(()=>{
+        window.location.reload();
+    }).catch((error)=>{
+        console.log("error", error)
+    })
+  };
+
+  return (
+    <div className="login">
+      <Menubar />
+      <img className="loginImg" src={loginImg} alt="hehe" width={"30%"}/>
+      {isLoggedIn 
+        ? <button className="loginButton" onClick={handleLogout}>LogOut</button>
+        : <button className="loginButton" onClick={handleGoogleLogin}>Login with Google</button>
+      }
+      {/* <button className="loginButton" onClick={handleGoogleLogin}>Login with Google</button> */}
+    </div>
+  );
 }
 
 export default Login;

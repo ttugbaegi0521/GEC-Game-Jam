@@ -23,9 +23,8 @@ body{
     border: none;
     cursor: pointer;
     font-weight: 500;
-    position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -180%);
+    transform: translate(-50%, -150%);
     /* -ms-transform: translate(-50%, -50%); */
 }

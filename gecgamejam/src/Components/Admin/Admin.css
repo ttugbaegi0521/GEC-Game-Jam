@@ -1,0 +1,68 @@
+.adminContent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 80px);
+}
+
+#input{
+    border-radius: 10px;
+    border: none;
+    caret-color: transparent;
+    background-color: #40484D;
+    border: #1B1F20 3px solid;
+    width: 30vw;
+    height: 5vh;
+    text-align: center;
+    color: white;
+    outline: none;
+    margin: 10px;
+}
+
+
+#btn{
+    border-radius: 10px;
+    border: none;
+    background-color: #40484D;
+    border: #1B1F20 3px solid;
+    color: white;
+    width: 10vh;
+    height: 5vh;
+    cursor: pointer;
+    font-weight: 500;
+    margin: 10px;
+
+}
+
+#input::placeholder{
+    color: white;
+    font-weight: 500;
+}
+
+#input:focus{
+    border: rgb(0, 0, 0) 3px solid;
+}
+
+fieldset {
+    border: 3px solid #fff;
+    border-radius: 10px;
+    width: 80vh;
+    height: 50vh;
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+fieldset #input{
+    text-align: center;
+}
+
+legend{
+    margin-left: 10px;
+    font-weight: 500;
+    font-size: 30px;
+}

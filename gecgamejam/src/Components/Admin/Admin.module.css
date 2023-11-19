@@ -4,6 +4,7 @@
     align-items: center;
     justify-content: center;
     height: calc(100vh - 80px);
+    margin-top: 10vh;
 }
 
 #input{
@@ -33,6 +34,10 @@
     font-weight: 500;
     margin: 10px;
 
+}
+
+.editContent{
+    display: inline;
 }
 
 #input::placeholder{

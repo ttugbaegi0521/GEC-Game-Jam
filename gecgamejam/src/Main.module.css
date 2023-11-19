@@ -3,10 +3,15 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: calc(100vh - 80px);
+    /* height: calc(100vh - 80px); */
     margin-bottom: 100px;
-    margin-top: 30vh; /* Adjust the value to control the overlap */
+    position: relative;
+    /* margin-top: 2vh; Adjust the value to control the overlap */
 }
+/* 
+.jamWrap{
+    margin-top: 3vh;
+} */
 
 .jam {
     position: relative;
@@ -101,11 +106,13 @@
     justify-content: space-between;
     font-size: 0.9vw;
     max-width: 80%; /* Adjust max-width based on the available space */
+    text-align: left;
 }
 
 .jamDescriptionContent {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    justify-content: flex-start;
     align-items: center;
     width: 100%;
     padding: 0 20px; /* Adjust padding as needed */

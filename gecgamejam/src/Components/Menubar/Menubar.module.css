@@ -58,5 +58,16 @@ a{
 }
 
 .wrapper{
-    margin: 0 0 calc(5vh) 0;
+    margin: 0 0 2vh 0;
+}
+
+.adminLink {
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 15px;
+    letter-spacing: -1px;
+    word-spacing: 0px;
+    font-weight: 500;
+    color: white;
+    text-decoration: none;
 }

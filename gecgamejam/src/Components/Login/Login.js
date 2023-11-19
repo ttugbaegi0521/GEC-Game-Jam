@@ -1,13 +1,12 @@
 // export default Login;
 import React, { useEffect, useState } from "react";
-import "./Login.css";
 import loginImg from "./hehe.png";
 import { signInWithPopup, signOut } from "firebase/auth"; //추가
 import { auth, provider } from "../Firebase/Firebase";
 import Menubar from "../Menubar/Menubar";
 import { useNavigate } from "react-router-dom";
 import { get, getDatabase, ref, set } from "firebase/database";
-
+import style from "./Login.module.css";
 
 const Login = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -58,12 +57,12 @@ const Login = () => {
   };
 
   return (
-    <div className="login" style={{overflow:"hidden"}}>
+    <div className={style.login} style={{overflow:"hidden"}}>
       <Menubar />
-      <img className="loginImg" src={loginImg} alt="hehe" width={"30%"}/>
+      <img className={style.loginImg} src={loginImg} alt="hehe" width={"30%"}/>
       {isLoggedIn 
-        ? <button className="loginButton" onClick={handleLogout}>LogOut</button>
-        : <button className="loginButton" onClick={handleGoogleLogin}>Login with Google</button>
+        ? <button className={style.loginButton} onClick={handleLogout}>LogOut</button>
+        : <button className={style.loginButton} onClick={handleGoogleLogin}>Login with Google</button>
       }
       {/* <button className="loginButton" onClick={handleGoogleLogin}>Login with Google</button> */}
     </div>

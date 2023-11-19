@@ -1,0 +1,49 @@
+.jamSubmitContent{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.jamTitle{
+    margin-left: 20px;
+    font-weight: 900;
+    color: white;
+    font-size: 40px;
+}
+
+.jamSubmitInfo{
+    display: flex;
+    flex-direction: row;
+    /* justify-content: center; */
+    /* margin-top: 20px; */
+    margin-bottom: 0;
+}
+
+.jamName{
+    margin-top: 55px;
+    font-weight: 500;
+    font-size: 15px;
+    color: white;
+    margin-left: 15px;
+}
+
+.jamNote{
+    color: grey;
+    font-size: 20px;
+    margin: -20px 0 10px;
+    margin-left: 20px;
+}
+
+#jamInput{
+    border-radius: 10px;
+    border: none;
+    caret-color: transparent;
+    background-color: #40484D;
+    border: #1B1F20 3px solid;
+    width: 100vw;
+    height: 5vh;
+    text-align: center;
+    color: white;
+    outline: none;
+    margin: 10px;
+}

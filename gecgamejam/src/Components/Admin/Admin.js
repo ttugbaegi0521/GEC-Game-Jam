@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { get, getDatabase, ref, set } from "firebase/database";
-import "./Admin.css";
+import { get, getDatabase, onValue, ref, set } from "firebase/database";
+import style from "./Admin.module.css";
 import Menubar from "../Menubar/Menubar";
 import { auth } from "../Firebase/Firebase";
 
 const Admin = () => {
     const [name, setName] = useState("");
     const [date, setDate] = useState("");
+    const [time, setTime] = useState("");
     const [description, setDescription] = useState("");
     const [color, setColor] = useState("");
+    const [img, setImg] = useState("");
     const [isAdmin, setIsAdmin] = useState(false);
+    const [jamData, setJamData] = useState(null);
 
     function writeGameData(name, date, description, color) {
         const db = getDatabase();
@@ -17,15 +20,55 @@ const Admin = () => {
             name,
             date,
             description,
-            color
+            color,
+            img,
+            time
         });
 
         setName("");
         setDate("");
         setDescription("");
         setColor("");
+        setImg("");
+        setTime("");
 
         window.location.reload();
+    }
+
+    function getJamData(){
+        const db = getDatabase();
+        const jamRef = ref(db, 'jam');
+
+        onValue(jamRef, (snapshot) => {
+          const data = snapshot.val();
+          if (data == null) return;
+          setJamData(Object.values(data));
+        });
+    }
+
+    function editJam(){
+        const db = getDatabase();
+        if(!db) return;
+        var elements = [];
+        if (!jamData) return;
+        for(var i=0;i < jamData.length; i++){
+            elements.push(
+                <div className={style.editContent} key={i}>
+                    <h1>{jamData[i].name}</h1>
+                    <button id="deleteBtn" onClick={() => {
+                        set(ref(db, 'jam/' + jamData[i].name), null);
+                        window.location.reload();
+                    }}>Delete</button>
+                </div>
+            )
+        };
+        console.log(jamData);
+
+        return (
+            <div>
+                {elements}
+            </div>
+        );
     }
 
     useEffect(() => {
@@ -34,6 +77,7 @@ const Admin = () => {
             }, 2000);
         }
         delayAtLoad();
+        getJamData();
     }, []);
 
     useEffect(() => {
@@ -46,35 +90,49 @@ const Admin = () => {
                 const snapshot = await get(userRef);
                 if (snapshot.exists()) {
                     setIsAdmin(snapshot.val().isAdmin);
+                }else{
+                    setIsAdmin(false);
                 }
+                console.log(isAdmin);
             }
         });
-    }, []);
+    }, [isAdmin]);
 
     const handleChange = setter => event => setter(event.target.value);
 
     return (
-        <div className="admin">
+        <div className={style.admin}>
             <Menubar />
-            <div className="adminContent">
+            <div className={style.adminContent}>
                 {isAdmin 
-                ? <fieldset>
-                    <legend>Game Jam</legend>
-                    <input type="text" placeholder="Name" id="input" onChange={handleChange(setName)} />
-                
-                    <input type="date" placeholder="Date" id="input" onChange={handleChange(setDate)}/>
+                ? 
+                <div>
+                    <fieldset>
+                        <legend>Add Jam</legend>
+                        <input type="text" placeholder="Name" id={style.input} onChange={handleChange(setName)} />
                     
-                    <input type="text" placeholder="Description" id="input" onChange={handleChange(setDescription)}/>
+                        <input type="date" placeholder="Date" id={style.input} onChange={handleChange(setDate)}/>
+                        <input type="time" placeholder="Time" id={style.input} onChange={handleChange(setTime)}/>
+                        
+                        <input type="text" placeholder="Description" id={style.input} onChange={handleChange(setDescription)}/>
 
-                    <h2 style={{color: "white", fontSize:"10px", margin: "0px", marginRight:"calc(30vw - 25px)"}}>Color:</h2>
-                    <input type="color" placeholder="Color" id="input" onChange={handleChange(setColor)}/>
+                        <h2 style={{color: "white", fontSize:"10px", margin: "0px", marginRight:"calc(30vw - 25px)"}}>Color:</h2>
+                        <input type="color" placeholder="Color" id={style.input} onChange={handleChange(setColor)}/>
 
-                    <button id="btn" onClick={() => {
-                        if(!isAdmin) return;
-                            writeGameData(name, date, description, color)}
-                        }>Submit</button>
-                </fieldset>
-                : <h1 className='load'>Loading...</h1>
+                        <input type="text" placeholder="Img" id={style.input} onChange={handleChange(setImg)}/>
+
+                        <button id={style.btn} onClick={() => {
+                            if(!isAdmin) return;
+                                writeGameData(name, date, description, color, img)}
+                            }>Submit</button>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Edit Jam</legend>
+                        {editJam()}
+                    </fieldset>
+                </div>
+                : <h1 className={style.load}>Loading...</h1>
             }
             </div>
         </div>

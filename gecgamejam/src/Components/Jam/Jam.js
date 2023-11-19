@@ -17,6 +17,12 @@ const Jam = () => {
     useEffect(() => {
         //check if jamId exists
         auth.onAuthStateChanged(async (user) => {
+
+            if (user == null) {
+                navigate("/");
+                return;
+            }
+
             const db = getDatabase();
             const userRef = ref(db, "users/" + user.uid);
             const jamRef = ref(db, "jam/" + jamId);

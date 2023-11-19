@@ -5,12 +5,14 @@ import { getDatabase, ref, onValue, remove } from "firebase/database";
 import { useNavigate } from 'react-router-dom';
 import style from './Main.module.css';
 import icon from './Assets/Icon/icon-512.png';
+import { auth } from './Components/Firebase/Firebase';
 
 function Main() {
   const [jamData, setJamData] = useState(null);
   const [time, setTime] = useState(new Date());
   const navigate = useNavigate();
   const imgRef = useRef(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     if(jamData === null) {
@@ -20,6 +22,12 @@ function Main() {
         document.body.style.overflow = 'auto';
       }, 1000);
     }
+
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        setUser(user);
+      }
+    });
 
     const interval = setInterval(() => {
       setTime(new Date());
@@ -33,8 +41,6 @@ function Main() {
     onValue(jamRef, (snapshot) => {
       const data = snapshot.val();
       if (data == null) return;
-
-      // console.log(data);
   
       const updatedData = Object.entries(data).reduce((acc, [key, value]) => {
         // Convert the date with time
@@ -71,6 +77,10 @@ function Main() {
   }
 
   function navigateJam(name){
+    if(user == null){
+      navigate('/login');
+      return;
+    }
     console.log('/jam/' + name.replace(" ", '-'));
     navigate('/jam/' + name.replace(" ", '-'));
   }

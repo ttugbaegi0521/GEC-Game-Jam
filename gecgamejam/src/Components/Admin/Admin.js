@@ -14,8 +14,23 @@ const Admin = () => {
     const [isAdmin, setIsAdmin] = useState(false);
     const [jamData, setJamData] = useState(null);
 
-    function writeGameData(name, date, description, color) {
+    function writeJamData(name, date, description, color) {
+        console.log(name, date, description, color);
+        if (name === "" || date === "" || description === "") {
+            alert("Please fill out all fields");
+            return;
+        }
+
+        if (color === "") {
+            color = "#000000";
+        }
+
+        if (img === "") {
+            setImg("https://resources.finalsite.net/images/f_auto,q_auto/v1666576418/sjajejukr/sw42kuuzkcwhmj59kya8/Thumbnail.png");
+        }
+        
         const db = getDatabase();
+        name = name.replace(" ", '-')
         set(ref(db, 'jam/' + name), {
             name,
             date,
@@ -123,7 +138,7 @@ const Admin = () => {
 
                         <button id={style.btn} onClick={() => {
                             if(!isAdmin) return;
-                                writeGameData(name, date, description, color, img)}
+                                writeJamData(name, date, description, color, img)}
                             }>Submit</button>
                     </fieldset>
 

@@ -1,16 +1,26 @@
 // import './App.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Menubar from './Components/Menubar/Menubar';
 import { getDatabase, ref, onValue, remove } from "firebase/database";
 import { useNavigate } from 'react-router-dom';
 import style from './Main.module.css';
+import icon from './Assets/Icon/icon-512.png';
 
 function Main() {
   const [jamData, setJamData] = useState(null);
   const [time, setTime] = useState(new Date());
   const navigate = useNavigate();
+  const imgRef = useRef(null);
 
   useEffect(() => {
+    if(jamData === null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      setTimeout(() => {
+        document.body.style.overflow = 'auto';
+      }, 1000);
+    }
+
     const interval = setInterval(() => {
       setTime(new Date());
     }, 1000);
@@ -24,7 +34,7 @@ function Main() {
       const data = snapshot.val();
       if (data == null) return;
 
-      console.log(data);
+      // console.log(data);
   
       const updatedData = Object.entries(data).reduce((acc, [key, value]) => {
         // Convert the date with time
@@ -61,22 +71,17 @@ function Main() {
   }
 
   function navigateJam(name){
-    navigate('/jam/' + name.replace(" ", '-').toLowerCase());
-    // console.log(name);
+    console.log('/jam/' + name.replace(" ", '-'));
+    navigate('/jam/' + name.replace(" ", '-'));
   }
   
   function displayJamData(){
     if(jamData == null){
       getJamData();
-      return(
-        <div>
-          <h1 className={style.load}>Loading...</h1>
-        </div>
-      )
-    }else{
+    }
+    else{
       var elements = [];
         for(let i = 0; i < jamData.length; i++){
-
         //calculate time left
         // var timeLeft = new Date(jamData[i].date) - time;
         var diff = new Date(jamData[i].date + " " + jamData[i].time) - time;
@@ -85,13 +90,12 @@ function Main() {
         var mins = Math.floor(diff / 1000 / 60);
         diff -= mins * 1000 * 60;
         var secs = Math.floor(diff / 1000);
-        var timeLeftString = hours + ": " + mins + ": " + secs;
         
-        if(hours < 10) timeLeftString = "0" + timeLeftString;
-        if(mins < 10) timeLeftString = "0" + timeLeftString;
-        if(secs < 10) timeLeftString = "0" + timeLeftString;
-
-
+        if(hours < 10) hours = "0" + hours;
+        if(mins < 10) mins = "0" + mins;
+        if(secs < 10) secs = "0" + secs;
+        
+        var timeLeftString = hours + ": " + mins + ": " + secs;
         elements.push(
           <div className={style.jam} key={i} onClick={() => navigateJam(jamData[i].name)}>
               <div className={style.jamCard} style={{ backgroundColor: jamData[i].color }}>
@@ -113,7 +117,8 @@ function Main() {
                   </div>
               </div>
           </div>)
-      }
+        
+    }
       return(
         <div className={style.jamWrap}>
           {elements}
@@ -124,6 +129,11 @@ function Main() {
 
   return (
     <div className={style.App}>
+      <div className={ jamData != null ? `${style.fadeOut} ${style.loadScreen}` : `${style.fadeIn} ${style.loadScreen}` }>
+        <img ref={imgRef} src={icon} alt='icon' className={style.load} />
+        <h1 className={style.loadText}>Loading...</h1>
+      </div>
+      
       <Menubar />
       <div className={style.main}>
         {displayJamData()}

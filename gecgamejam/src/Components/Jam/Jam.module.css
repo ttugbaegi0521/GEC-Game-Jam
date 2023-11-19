@@ -10,13 +10,29 @@
     color: white;
     font-size: 40px;
 }
+.jamSubmit{
+    display: flex;
+    flex-direction:row;
+    margin-bottom: 0;
+}
 
 .jamSubmitInfo{
     display: flex;
-    flex-direction: row;
-    /* justify-content: center; */
-    /* margin-top: 20px; */
+    flex-direction: column;
+    justify-content: space-between;
     margin-bottom: 0;
+    /* center */
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+.jamInputInfo{
+    color: white;
+    font-size: 40px;
+    margin: 0;
+    margin-top: 10px;
+    font-weight: 700;
 }
 
 .jamName{
@@ -36,14 +52,39 @@
 
 #jamInput{
     border-radius: 10px;
-    border: none;
     caret-color: transparent;
     background-color: #40484D;
     border: #1B1F20 3px solid;
-    width: 100vw;
+    width: 30vw;
     height: 5vh;
     text-align: center;
     color: white;
     outline: none;
     margin: 10px;
+}
+/* 
+input::-webkit-file-upload-button {
+  visibility: hidden;
+} */
+
+.inputStyle {
+    box-sizing: border-box;
+    padding: 15px 30px;
+    font-size: 16px;
+    border-radius: 10px;
+    
+}
+
+#btn{
+    border-radius: 10px;
+    border: none;
+    background-color: #40484D;
+    border: #1B1F20 3px solid;
+    color: white;
+    width: 10vh;
+    height: 3vh;
+    cursor: pointer;
+    font-weight: 500;
+    margin: 10px;
+
 }

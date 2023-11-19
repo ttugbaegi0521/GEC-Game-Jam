@@ -21,6 +21,7 @@
     align-items: center;
     /* margin-bottom: 20px; */
     margin-top: 5vh;
+    cursor: pointer;
 }
 
 .jamCard {
@@ -138,13 +139,55 @@
 }
 
 .load{
-    display: fixed;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100px;
-    height: 100px;
-    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5%;
+    z-index: 999;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; display: none;}
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; display: none;}
+}
+
+.fadeIn {
+    animation: fadeIn 1s ease-in-out forwards;
+}
+
+.fadeOut {
+    animation: fadeOut 1s ease-in-out forwards;
+}
+
+.loadScreen{
+    height: 100vh;
+    width: 100vw;        
+    background-color: rgba(0, 0, 0, 1);
+    position: absolute;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    z-index: 998;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin: 0;
+}
+
+    
+.loadText{
     color: white;
+    font-size: 2vw;
+    font-weight: 700;
+    margin-top: -2vh;
+    z-index: 999;
 }
